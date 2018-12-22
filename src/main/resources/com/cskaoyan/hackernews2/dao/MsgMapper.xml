@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cskaoyan.hackernews2.dao.MsgMapper">
+  <resultMap id="BaseResultMap" type="com.cskaoyan.hackernews2.bean.Msg">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="Fromid" jdbcType="INTEGER" property="fromid" />
+    <result column="Toid" jdbcType="INTEGER" property="toid" />
+    <result column="Content" jdbcType="VARCHAR" property="content" />
+    <result column="createdDate" jdbcType="TIMESTAMP" property="createddate" />
+    <result column="conversationId" jdbcType="VARCHAR" property="conversationid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, Fromid, Toid, Content, createdDate, conversationId
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `msg`
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByUid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from `msg`
+    where Toid = #{uid}
+  </select>
+
+
+
+  <select id="selectByconversationId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from `msg`
+    where conversationId = #{conversationId}
+  </select>
+
+
+
+
+  <select id="selectMsgByFromid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from `msg`
+    where Fromid = #{Fromid}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from `msg`
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cskaoyan.hackernews2.bean.Msg" useGeneratedKeys="true">
+    insert into `msg` (id ,Fromid, Toid, Content,
+      createdDate, conversationId)
+    values (null ,#{fromid,jdbcType=INTEGER}, #{toid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR},
+      now(), #{conversationid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cskaoyan.hackernews2.bean.Msg" useGeneratedKeys="true">
+    insert into `msg`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fromid != null">
+        Fromid,
+      </if>
+      <if test="toid != null">
+        Toid,
+      </if>
+      <if test="content != null">
+        Content,
+      </if>
+      <if test="createddate != null">
+        createdDate,
+      </if>
+      <if test="conversationid != null">
+        conversationId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fromid != null">
+        #{fromid,jdbcType=INTEGER},
+      </if>
+      <if test="toid != null">
+        #{toid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createddate != null">
+        #{createddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="conversationid != null">
+        #{conversationid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cskaoyan.hackernews2.bean.Msg">
+    update `msg`
+    <set>
+      <if test="fromid != null">
+        Fromid = #{fromid,jdbcType=INTEGER},
+      </if>
+      <if test="toid != null">
+        Toid = #{toid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        Content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createddate != null">
+        createdDate = #{createddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="conversationid != null">
+        conversationId = #{conversationid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cskaoyan.hackernews2.bean.Msg">
+    update `msg`
+    set Fromid = #{fromid,jdbcType=INTEGER},
+      Toid = #{toid,jdbcType=INTEGER},
+      Content = #{content,jdbcType=VARCHAR},
+      createdDate = #{createddate,jdbcType=TIMESTAMP},
+      conversationId = #{conversationid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

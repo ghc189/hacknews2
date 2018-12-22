@@ -6,25 +6,28 @@
         <div class="jscroll-inner">
             <div class="daily">
 
-           <#assign  cur_date =''/>
+          <#-- <#assign  cur_date =.now?string("yyyy-MM-dd")/>-->
+               <#assign  cur_date =''/>
            <#list vos as vo >
-            <#if cur_date != vo.news.createdDate?string("yyyy-MM-dd")>
-                 <#if vo_index gt 0 >
+               <#if cur_date != vo.news.createDate?string("yyyy-MM-dd")>
+                   <#if vo_index gt 0 >
                       </div> <#--   上一个要收尾 -->
-                 </#if>
-                <#assign  cur_date =vo.news.createdDate?string("yyyy-MM-dd")/>
+                   </#if>
+            <#assign  cur_date =vo.news.createDate?string("yyyy-MM-dd")/>
+                  <#-- <#assign  cur_date =.now?string("yyyy-MM-dd")/>-->
             <h3 class="date">
                 <i class="fa icon-calendar"></i>
-                <span>美食资讯 &nbsp; ${vo.news.createdDate?string("yyyy-MM-dd")}</span>
+                <span>美食资讯 &nbsp; ${vo.news.createDate?string("yyyy-MM-dd")}</span>
             </h3>
             <div class="posts">
-            </#if>
+               </#if>
+
                  <div class="post">
                     <div class="votebar">
                         <#if  vo.like gt 0 >
-                        <button class="click-like up pressed" data-id="${vo.news.id!}" title="赞同"><i class="vote-arrow"></i><span class="count">${vo.news.likeCount!}</span></button>
+                        <button class="click-like up pressed" data-id="${vo.news.id!}" title="赞同"><i class="vote-arrow"></i><span class="count">${vo.news.likeCount!0}</span></button>
                         <#else>
-                        <button class="click-like up" data-id="${vo.news.id!}" title="赞同"><i class="vote-arrow"></i><span class="count">${vo.news.likeCount!}</span></button>
+                        <button class="click-like up" data-id="${vo.news.id!}" title="赞同"><i class="vote-arrow"></i><span class="count">${vo.news.likeCount!0}</span></button>
                         </#if>
                         <#if vo.like < 0>
                         <button class="click-dislike down pressed" data-id="${vo.news.id!}" title="反对"><i class="vote-arrow"></i></button>
@@ -56,7 +59,7 @@
 
                     </div>
 
-                    <div class="subject-name">来自 <a href="${contextPath!}/user/${vo.user.id}/">${vo.user.name}</a></div>
+                    <div class="subject-name">来自 <a href="${contextPath!}/user/${vo.user.id}/">${vo.user.username}</a></div>
                 </div>
 
 

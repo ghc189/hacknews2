@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cskaoyan.hackernews2.dao.CommentMapper">
+  <resultMap id="BaseResultMap" type="com.cskaoyan.hackernews2.bean.Comment">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="newsId" jdbcType="INTEGER" property="newsid" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, createDate, content, uid, newsId
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `comment`
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="selectByNewsId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from `comment`
+    where newsId = #{newsId}
+  </select>
+
+  <select id="selectComments"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from `comment`
+
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from `comment`
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cskaoyan.hackernews2.bean.Comment" useGeneratedKeys="true">
+    insert into `comment` (createDate, content, id ,uid,
+      newsId)
+    values (now(), #{content,jdbcType=VARCHAR},null ,#{uid,jdbcType=INTEGER},
+      #{newsid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cskaoyan.hackernews2.bean.Comment" useGeneratedKeys="true">
+    insert into `comment`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createDate != null">
+        createDate,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="newsid != null">
+        newsId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="newsid != null">
+        #{newsid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.cskaoyan.hackernews2.bean.Comment">
+    update `comment`
+    <set>
+      <if test="createDate != null">
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="newsid != null">
+        newsId = #{newsid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cskaoyan.hackernews2.bean.Comment">
+    update `comment`
+    set createDate = #{createDate,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=INTEGER},
+      newsId = #{newsid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

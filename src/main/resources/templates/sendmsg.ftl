@@ -60,7 +60,7 @@
         var elementById = document.getElementById("msg_to");
         var to=elementById.value;
         var elementById2 = document.getElementById("msg_content");
-        var content=elementById2.innerText;
+        var content=elementById2.value;
         //alert(content)
 
         var  errtag =document.getElementById("zh-question-form-tag-err");

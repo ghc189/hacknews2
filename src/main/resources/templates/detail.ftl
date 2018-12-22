@@ -48,7 +48,7 @@
                 -->
             </div>
 
-            <div class="subject-name">来自 <a href="${contextPath}/user/${owner.id}">${owner.name!}</a></div>
+            <div class="subject-name">来自 <a href="${contextPath}/user/${owner.id}">${owner.username!}</a></div>
         </div>
 
 
@@ -82,7 +82,7 @@
                 </a>
                 <div class="media-body">
                     <h4 class="media-heading">
-                        <small class="date">${commentvo.comment.createdDate?string('yyyy-MM-dd HH:mm:ss')}
+                        <small class="date">${commentvo.comment.createDate?string('yyyy-MM-dd HH:mm:ss')}
                         </small>
                     </h4>
                     <div>${commentvo.comment.content!}</div>
